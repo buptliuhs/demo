@@ -1,14 +1,10 @@
 import { add } from "../src/demo1";
+import * as faker from "faker";
 
 describe("demo1", () => {
-  beforeAll(async () => {
-  });
-
-  afterEach(() => {
-    // jest.restoreAllMocks();
-  });
-
   it("add", () => {
-    expect(add(1, 2)).toEqual(3);
+    const n1 = faker.datatype.number();
+    const n2 = faker.datatype.number();
+    expect(add(n1, n2)).toEqual(n1 + n2);
   });
 });

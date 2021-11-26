@@ -1,13 +1,25 @@
-import {rateLimit} from "../src/demo1";
+import {rateLimit, reset} from "../src/demo1";
 import * as faker from "faker";
 
 jest.setTimeout(60_000);
+
+const EMPTY_INTERVAL_SECONDS = 3;
 
 const sleep = (milliseconds: number) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 describe("rateLimit", () => {
+    let timer: NodeJS.Timer;
+
+    beforeAll(() => {
+        timer = setInterval(reset, EMPTY_INTERVAL_SECONDS * 1_000);
+    });
+
+    afterAll(() => {
+        clearInterval(timer);
+    })
+
     it("rateLimit", () => {
         const customerId = faker.datatype.number();
         let allowed: boolean;
@@ -18,25 +30,6 @@ describe("rateLimit", () => {
         allowed = rateLimit(customerId);
         expect(allowed).toBe(false);
     });
-
-    // it("rateLimit allowed after one interval", async () => {
-    //     const customerId = faker.datatype.number();
-    //     let allowed: boolean;
-    //     for (let i = 0; i < 10; i++) {
-    //         allowed = rateLimit(customerId);
-    //         expect(allowed).toBe(true);
-    //     }
-    //     allowed = rateLimit(customerId);
-    //     expect(allowed).toBe(false);
-    //
-    //     // Wait for 1 minute
-    //     console.log("waiting for 3 seconds");
-    //     await sleep(3 * 1_000);
-    //     console.log("now, make another request");
-    //
-    //     allowed = rateLimit(customerId);
-    //     expect(allowed).toBe(true);
-    // });
 
     it("rateLimit allowed after one interval (accumulated)", async () => {
         const customerId = faker.datatype.number();

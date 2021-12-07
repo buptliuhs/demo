@@ -1,4 +1,4 @@
-import {rateLimit, reset} from "../src/demo1";
+import {rateLimit, reset} from "../src/rate-limiter";
 import * as faker from "faker";
 
 jest.setTimeout(60_000);
@@ -9,7 +9,7 @@ const sleep = (milliseconds: number) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-describe("rateLimit", () => {
+describe("rateLimiter", () => {
     let timer: NodeJS.Timer;
 
     beforeAll(() => {

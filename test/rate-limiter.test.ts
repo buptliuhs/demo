@@ -9,7 +9,7 @@ const sleep = (milliseconds: number) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-describe("rateLimiter", () => {
+describe.skip("rateLimiter", () => {
     let timer: NodeJS.Timer;
 
     beforeAll(() => {

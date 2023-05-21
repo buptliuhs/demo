@@ -1,5 +1,5 @@
-import {rateLimit, reset} from "../src/rate-limiter";
-import * as faker from "faker";
+import { rateLimit, reset } from "../src/rate-limiter";
+import { faker } from '@faker-js/faker';
 
 jest.setTimeout(60_000);
 
@@ -9,7 +9,7 @@ const sleep = (milliseconds: number) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-describe.skip("rateLimiter", () => {
+describe("rateLimiter", () => {
     let timer: NodeJS.Timer;
 
     beforeAll(() => {
@@ -21,7 +21,7 @@ describe.skip("rateLimiter", () => {
     })
 
     it("rateLimit", () => {
-        const customerId = faker.datatype.number();
+        const customerId = faker.number.int();
         let allowed: boolean;
         for (let i = 0; i < 20; i++) {
             allowed = rateLimit(customerId);
@@ -32,7 +32,7 @@ describe.skip("rateLimiter", () => {
     });
 
     it("rateLimit allowed after one interval (accumulated)", async () => {
-        const customerId = faker.datatype.number();
+        const customerId = faker.number.int();
         let allowed: boolean;
         console.log("making 20 requests");
         for (let i = 0; i < 20; i++) {

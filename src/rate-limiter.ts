@@ -6,7 +6,7 @@
 const MAX_NUMBER_OF_REQUESTS = 10;
 const CARRY_OVER_MAX_NUMBER_OF_REQUESTS = 2 * MAX_NUMBER_OF_REQUESTS;
 
-let carryOverBuckets: { [key: number]: number } = {}
+let carryOverBuckets: { [key: number]: number | undefined } = {}
 
 /**
  * Customer can make # requests every # seconds

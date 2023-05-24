@@ -39,19 +39,19 @@ export interface Result {
  */
 export function topNCollections(files: FileInfo2[], n: number): Result {
     let totalSize = 0;
-    const collectionInfoMap: { [key: string]: number } = {};
+    const collectionInfoMap: Map<string, number> = new Map<string, number>();
     files.forEach((f) => {
         totalSize += f.size;
         f.collections.forEach((c) => {
-            if (collectionInfoMap[c]) {
-                collectionInfoMap[c] += f.size;
+            if (collectionInfoMap.has(c)) {
+                collectionInfoMap.set(c, collectionInfoMap.get(c)! + f.size);
             } else {
-                collectionInfoMap[c] = f.size;
+                collectionInfoMap.set(c, f.size);
             }
         })
     });
     // Get top N collections by size
-    const list = Object.entries(collectionInfoMap);
+    const list = Array.from(collectionInfoMap.entries());
     // Sort based on size
     const sortedCollectionList: string[] = list.sort((a, b) => b[1] - a[1]).map((e) => e[0]);
     return {
